@@ -36,7 +36,8 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+extern TIM_HandleTypeDef htim16;
+extern UART_HandleTypeDef huart1;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -51,6 +52,9 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
+void MX_USART1_UART_Init(void);
+void MX_RNG_Init(void);
+void MX_TIM16_Init(void);
 
 /* USER CODE BEGIN EFP */
 
