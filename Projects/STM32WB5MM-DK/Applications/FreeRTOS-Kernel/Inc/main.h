@@ -31,7 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stm32wb5mm_dk.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

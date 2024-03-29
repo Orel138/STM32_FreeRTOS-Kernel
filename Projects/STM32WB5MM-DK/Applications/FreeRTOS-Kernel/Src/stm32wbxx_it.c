@@ -207,4 +207,14 @@ void _SysTick_Handler(void)
   HAL_IncTick();
 }
 
+/**
+  * @brief  This function handles TIM17 IRQ Handler.
+  * @param  None
+  * @retval None
+  */
+void TIM1_TRG_COM_TIM17_IRQHandler(void)
+{
+  BSP_PWM_LED_IRQHandler();
+}
+
 /* USER CODE END 1 */

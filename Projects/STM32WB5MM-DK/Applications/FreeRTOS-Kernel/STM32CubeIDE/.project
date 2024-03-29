@@ -101,6 +101,16 @@
 			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_hsem.c</locationURI>
 		</link>
 		<link>
+			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_hal_i2c.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_i2c.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_hal_i2c_ex.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_i2c_ex.c</locationURI>
+		</link>
+		<link>
 			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_hal_pwr.c</name>
 			<type>1</type>
 			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_pwr.c</locationURI>
@@ -126,6 +136,16 @@
 			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_rng.c</locationURI>
 		</link>
 		<link>
+			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_hal_spi.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_spi.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_hal_spi_ex.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_spi_ex.c</locationURI>
+		</link>
+		<link>
 			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_hal_tim.c</name>
 			<type>1</type>
 			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_hal_tim.c</locationURI>
@@ -149,6 +169,11 @@
 			<name>Drivers/STM32WBxx_HAL_Driver/stm32wbxx_ll_rcc.c</name>
 			<type>1</type>
 			<locationURI>PARENT-5-PROJECT_LOC/Drivers/STM32WBxx_HAL_Driver/Src/stm32wbxx_ll_rcc.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/BSP/STM32WB5MM-DK/stm32wb5mm_dk.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Drivers/BSP/STM32WB5MM-DK/stm32wb5mm_dk.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/FreeRTOS/kernel/croutine.c</name>

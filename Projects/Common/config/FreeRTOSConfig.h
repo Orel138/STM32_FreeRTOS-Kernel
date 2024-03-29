@@ -205,7 +205,9 @@ standard names. */
 
 #include "main.h"
 #define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()
-#define portGET_RUN_TIME_COUNTER_VALUE()    ( __HAL_TIM_GetCounter( &htim16 ) )
 
+#if defined(STM32WB5Mxx)
+#define portGET_RUN_TIME_COUNTER_VALUE()    ( __HAL_TIM_GetCounter( &htim16 ) )
+#endif /* STM32WB5Mxx */
 
 #endif /* FREERTOS_CONFIG_H */

@@ -55,7 +55,9 @@ TIM_HandleTypeDef htim16;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
+uint32_t ulCsrFlags = 0;
 
+aPwmLedGsData_TypeDef aPwmLedGsData_app;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -63,7 +65,8 @@ void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
-
+void vDoSystemReset(void);
+void vDetermineResetSource(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -73,14 +76,19 @@ static void vHeartbeatTask( void * pvParameters )
 {
     ( void ) pvParameters;
 
-//    HAL_GPIO_WritePin( LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET );
-//    HAL_GPIO_WritePin( LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_SET );
-
     while(1)
     {
-        vTaskDelay( pdMS_TO_TICKS( 1000 ) );
-//        HAL_GPIO_TogglePin( LED_GREEN_GPIO_Port, LED_GREEN_Pin );
-//        HAL_GPIO_TogglePin( LED_RED_GPIO_Port, LED_RED_Pin );
+        aPwmLedGsData_app[PWM_LED_RED]  = PWM_LED_GSDATA_OFF;
+        aPwmLedGsData_app[PWM_LED_BLUE] = PWM_LED_GSDATA_OFF;
+    	BSP_PWM_LED_On(aPwmLedGsData_app);
+
+    	vTaskDelay( pdMS_TO_TICKS( 1000 ) );
+
+    	aPwmLedGsData_app[PWM_LED_RED]  = PWM_LED_GSDATA_7_0;
+    	aPwmLedGsData_app[PWM_LED_BLUE] = PWM_LED_GSDATA_7_0;
+    	BSP_PWM_LED_On(aPwmLedGsData_app);
+
+    	vTaskDelay( pdMS_TO_TICKS( 1000 ) );
     }
 }
 
@@ -120,7 +128,9 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  aPwmLedGsData_app[PWM_LED_RED]   = PWM_LED_GSDATA_OFF;
+  aPwmLedGsData_app[PWM_LED_GREEN] = PWM_LED_GSDATA_OFF;
+  aPwmLedGsData_app[PWM_LED_BLUE]  = PWM_LED_GSDATA_OFF;
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -130,7 +140,7 @@ int main(void)
   PeriphCommonClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  ulCsrFlags = RCC->CSR;
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -140,10 +150,15 @@ int main(void)
   MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
 
+  /* Configure the PWM LED */
+  BSP_PWM_LED_Init();
+
   /* Initialize uart for logging before cli is up and running */
   vInitLoggingEarly();
-
   vLoggingInit();
+
+  vDetermineResetSource();
+  __HAL_RCC_CLEAR_RESET_FLAGS();
 
   LogInfo( "HW Init Complete" );
 
@@ -305,7 +320,6 @@ void MX_TIM16_Init(void)
   {
     Error_Handler();
   }
-
   /* USER CODE END TIM16_Init 2 */
 
 }
@@ -376,6 +390,33 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void HAL_Delay( uint32_t ulDelayMs )
+{
+    if( xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED )
+    {
+        vTaskDelay( pdMS_TO_TICKS( ulDelayMs ) );
+    }
+    else
+    {
+        uint32_t ulStartTick = HAL_GetTick();
+        uint32_t ulTicksWaited = ulDelayMs;
+
+        /* Add a freq to guarantee minimum wait */
+        if( ulTicksWaited < HAL_MAX_DELAY )
+        {
+            ulTicksWaited += ( uint32_t ) ( HAL_GetTickFreq() );
+        }
+
+        while( ( HAL_GetTick() - ulStartTick ) < ulTicksWaited )
+        {
+            __NOP();
+        }
+    }
+}
+
+/*-----------------------------------------------------------*/
+
 /* configUSE_STATIC_ALLOCATION is set to 1, so the application must provide an
  * implementation of vApplicationGetIdleTaskMemory() to provide the memory that is
  * used by the Idle task. */
@@ -489,6 +530,50 @@ void vDoSystemReset( void )
     vDyingGasp();
 
     NVIC_SystemReset();
+}
+
+/*-----------------------------------------------------------*/
+
+void vDetermineResetSource( void )
+{
+    const char * pcResetSource = NULL;
+
+    ulCsrFlags &= ( RCC_CSR_PINRSTF |
+    RCC_CSR_BORRSTF | RCC_CSR_SFTRSTF |
+	RCC_CSR_IWDGRSTF | RCC_CSR_WWDGRSTF |
+    RCC_CSR_LPWRRSTF );
+
+    if( ulCsrFlags & RCC_CSR_PINRSTF )
+    {
+        pcResetSource = "PINRSTF: pin reset";
+    }
+    if( ulCsrFlags & RCC_CSR_BORRSTF )
+    {
+        pcResetSource = ( pcResetSource == NULL ) ? "BORRSTF: BOR" : "BORRSTF: BOR with pin reset";
+    }
+    else if( ulCsrFlags & RCC_CSR_SFTRSTF )
+    {
+        pcResetSource = ( pcResetSource == NULL ) ? "SFTRSTF: software system reset" : "SFTRSTF: software system reset with pin reset";
+    }
+    else if( ulCsrFlags & RCC_CSR_IWDGRSTF )
+    {
+        pcResetSource = ( pcResetSource == NULL ) ? "IWDGRSTF: independent watchdog" : "IWDGRSTF: independent watchdog with pin reset";
+    }
+    else if( ulCsrFlags & RCC_CSR_WWDGRSTF )
+    {
+        pcResetSource = ( pcResetSource == NULL ) ? "WWDGRSTF: window watchdog" : "WWDGRSTF: window watchdog with pin reset";
+    }
+    else if( ulCsrFlags & RCC_CSR_LPWRRSTF )
+    {
+        pcResetSource = ( pcResetSource == NULL ) ? "LPWRRSTF: Low-power" : "LPWRRSTF: Low-power with pin reset";
+    }
+
+    if( pcResetSource == NULL )
+    {
+        pcResetSource = "Unknown";
+    }
+
+    LogSys( "Reset Source: 0x%x : %s.", ulCsrFlags, pcResetSource );
 }
 /* USER CODE END 4 */
 
