@@ -64,6 +64,9 @@ static void vAssertCommand( ConsoleIO_t * const pxCIO,
                             uint32_t ulArgc,
                             char * ppcArgv[] );
 
+static void vClearCommand( ConsoleIO_t * const pxCIO,
+                            uint32_t ulArgc,
+                            char * ppcArgv[] );
 
 
 const CLI_Command_Definition_t xCommandDef_ps =
@@ -135,6 +138,14 @@ const CLI_Command_Definition_t xCommandDef_assert =
     "assert\r\n"
     "   Cause a failed assertion.\r\n\n",
     vAssertCommand
+};
+
+const CLI_Command_Definition_t xCommandDef_clear =
+{
+    "clear",
+    "clear\r\n"
+    "   Clear the screen.\r\n\n",
+    vClearCommand
 };
 
 /*-----------------------------------------------------------*/
@@ -666,3 +677,11 @@ static void vAssertCommand( ConsoleIO_t * const pxCIO,
 {
     configASSERT( 0 );
 }
+
+static void vClearCommand( ConsoleIO_t * const pxCIO,
+                            uint32_t ulArgc,
+                            char * ppcArgv[] )
+{
+	pxCIO->print( "\033[2J\033[H" );
+}
+
