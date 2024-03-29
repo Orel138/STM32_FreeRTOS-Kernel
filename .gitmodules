@@ -7,3 +7,6 @@
 [submodule "Middlewares/Third_Party/FreeRTOS/kernel"]
 	path = Middlewares/Third_Party/FreeRTOS/kernel
 	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+[submodule "Drivers/BSP/STM32WB5MM-DK"]
+	path = Drivers/BSP/STM32WB5MM-DK
+	url = https://github.com/STMicroelectronics/stm32wb5mm-dk-bsp.git
