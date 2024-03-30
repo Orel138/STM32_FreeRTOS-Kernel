@@ -28,7 +28,6 @@
 #include "task.h"
 
 #include "cli.h"
-#include "stdlib.h" /* rand() */
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

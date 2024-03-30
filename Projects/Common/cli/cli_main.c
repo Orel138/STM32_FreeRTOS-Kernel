@@ -343,7 +343,6 @@ void Task_CLI( void * pvParameters )
     FreeRTOS_CLIRegisterCommand( &xCommandDef_heapStat );
     FreeRTOS_CLIRegisterCommand( &xCommandDef_reset );
     FreeRTOS_CLIRegisterCommand( &xCommandDef_uptime );
-//    FreeRTOS_CLIRegisterCommand( &xCommandDef_rngtest );
     FreeRTOS_CLIRegisterCommand( &xCommandDef_assert );
     FreeRTOS_CLIRegisterCommand( &xCommandDef_clear );
 
