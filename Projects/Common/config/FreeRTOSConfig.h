@@ -70,11 +70,7 @@ extern uint32_t SystemCoreClock;
 #define configTICK_RATE_HZ                         ( ( TickType_t ) 1000 )
 #define configMAX_PRIORITIES                       ( 56 )
 #define configMINIMAL_STACK_SIZE                   ( ( uint16_t ) 128 )
-#if (( TRANSPORT_INTERFACE_TEST_ENABLED == 1 ) || ( MQTT_TEST_ENABLED == 1 ))
 #define configTOTAL_HEAP_SIZE                      ( ( size_t ) 30 * 1024 )
-#else
-#define configTOTAL_HEAP_SIZE                      ( ( size_t ) 50 * 1024 )
-#endif
 #define configMAX_TASK_NAME_LEN                    ( 32 )
 #define configUSE_TRACE_FACILITY                   1
 #define configUSE_16_BIT_TICKS                     0
@@ -206,8 +202,8 @@ standard names. */
 #include "main.h"
 #define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()
 
-#if defined(STM32WB5Mxx)
+#if defined(STM32WB5Mxx) || defined(STM32WB55xx)
 #define portGET_RUN_TIME_COUNTER_VALUE()    ( __HAL_TIM_GetCounter( &htim16 ) )
-#endif /* STM32WB5Mxx */
+#endif /* STM32WB5Mxx | STM32WB55xx */
 
 #endif /* FREERTOS_CONFIG_H */

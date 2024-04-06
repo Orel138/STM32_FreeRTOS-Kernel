@@ -101,6 +101,7 @@ This Software Bill Of Materials (SBOM) itemizes the software components included
 ### Boards available
 - STM32WB55
   - [STM32WB5MM-DK](https://www.st.com/en/evaluation-tools/stm32wb5mm-dk.html)
+  - [P-NUCLEO-WB55.Nucleo](https://www.st.com/en/evaluation-tools/p-nucleo-wb55.html)
 
 ### Development toolchains and compilers
 
