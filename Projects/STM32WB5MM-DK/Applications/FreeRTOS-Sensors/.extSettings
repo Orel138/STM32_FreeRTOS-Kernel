@@ -1,0 +1,15 @@
+[ProjectFiles]
+HeaderPath=../Inc;../../../../../Projects/Common/cli;../../../../../Projects/Common/config;../../../../../Middlewares/Third_Party/FreeRTOS/kernel/include;../../../../../Middlewares/Third_Party/FreeRTOS/kernel/portable/GCC/ARM_CM4F;../../../../../Drivers/CMSIS/Core/Include;../../../../../Drivers/BSP/STM32WB5MM-DK;../../../../../Drivers/BSP/Components/ssd1315;../../../../../Drivers/BSP/Components/stts22h;../../../../../Drivers/BSP/Components/Common;../../../../../Utilities/Fonts;../../../../../Utilities/LCD;
+
+[Groups]
+Application/User/Common/cli=../../../../../Projects/Common/cli/cli_main.c;../../../../../Projects/Common/cli/cli_uart_drv.c;../../../../../Projects/Common/cli/cli_utils.c;../../../../../Projects/Common/cli/logging.c;
+Middlewares/FreeRTOS/kernel=../../../../../Middlewares/Third_Party/FreeRTOS/kernel/croutine.c;../../../../../Middlewares/Third_Party/FreeRTOS/kernel/event_groups.c;../../../../../Middlewares/Third_Party/FreeRTOS/kernel/list.c;../../../../../Middlewares/Third_Party/FreeRTOS/kernel/queue.c;../../../../../Middlewares/Third_Party/FreeRTOS/kernel/stream_buffer.c;../../../../../Middlewares/Third_Party/FreeRTOS/kernel/tasks.c;../../../../../Middlewares/Third_Party/FreeRTOS/kernel/timers.c;../../../../../Middlewares/Third_Party/FreeRTOS/kernel/portable/GCC/ARM_CM4F/port.c;../../../../../Middlewares/Third_Party/FreeRTOS/kernel/portable/MemMang/heap_4.c;
+Drivers/BSP/STM32WB5MM-DK=../../../../../Drivers/BSP/STM32WB5MM-DK/stm32wb5mm_dk.c;../../../../../Drivers/BSP/STM32WB5MM-DK/stm32wb5mm_dk_bus.c;../../../../../Drivers/BSP/STM32WB5MM-DK/stm32wb5mm_dk_lcd.c;../../../../../Drivers/BSP/STM32WB5MM-DK/stm32wb5mm_dk_env_sensors.c;../../../../../Drivers/BSP/STM32WB5MM-DK/stm32wb5mm_dk_env_sensors_ex.c;
+Drivers/BSP/ssd1315=../../../../../Drivers/BSP/Components/ssd1315/ssd1315.c;../../../../../Drivers/BSP/Components/ssd1315/ssd1315_reg.c;
+Drivers/BSP/stts22h=../../../../../Drivers/BSP/Components/stts22h/stts22h.c;../../../../../Drivers/BSP/Components/stts22h/stts22h_reg.c;
+Utilities=../../../../../Utilities/LCD/stm32_lcd.c;
+
+[Others]
+Define=USE_STM32WB5M_DK
+HALModule=I2C;SPI
+

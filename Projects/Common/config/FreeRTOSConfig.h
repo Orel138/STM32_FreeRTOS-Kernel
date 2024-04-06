@@ -73,7 +73,7 @@ extern uint32_t SystemCoreClock;
 #if (( TRANSPORT_INTERFACE_TEST_ENABLED == 1 ) || ( MQTT_TEST_ENABLED == 1 ))
 #define configTOTAL_HEAP_SIZE                      ( ( size_t ) 30 * 1024 )
 #else
-#define configTOTAL_HEAP_SIZE                      ( ( size_t ) 30 * 1024 )
+#define configTOTAL_HEAP_SIZE                      ( ( size_t ) 50 * 1024 )
 #endif
 #define configMAX_TASK_NAME_LEN                    ( 32 )
 #define configUSE_TRACE_FACILITY                   1
