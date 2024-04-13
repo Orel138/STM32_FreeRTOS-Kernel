@@ -302,6 +302,10 @@ void MX_TIM16_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM16_Init 2 */
+  if (HAL_TIM_Base_Start( &htim16 )!= HAL_OK)
+  {
+    Error_Handler();
+  }
 
   /* USER CODE END TIM16_Init 2 */
 
