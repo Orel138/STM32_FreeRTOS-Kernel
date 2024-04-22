@@ -1,5 +1,9 @@
 
-
-**/language.settings.xml
-**/stm32cubeide.project.prefs
+# STM32 Project output
 **/Debug/
+
+# Eclipse launch configuration
+*.launch
+
+# Eclipse settings
+*.settings/
