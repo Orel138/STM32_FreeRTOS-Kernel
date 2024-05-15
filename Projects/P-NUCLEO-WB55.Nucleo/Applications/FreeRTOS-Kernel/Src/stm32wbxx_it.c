@@ -24,7 +24,6 @@
 /* USER CODE BEGIN Includes */
 #include "FreeRTOS.h"
 #include "task.h"
-extern void SysTick_Handler( void );
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,6 +59,8 @@ extern void SysTick_Handler( void );
 /* External variables --------------------------------------------------------*/
 extern RNG_HandleTypeDef hrng;
 extern UART_HandleTypeDef huart1;
+extern TIM_HandleTypeDef htim16;
+
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -67,21 +68,6 @@ extern UART_HandleTypeDef huart1;
 /******************************************************************************/
 /*           Cortex Processor Interruption and Exception Handlers          */
 /******************************************************************************/
-/**
-  * @brief This function handles Non maskable interrupt.
-  */
-void NMI_Handler(void)
-{
-  /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
-
-  /* USER CODE END NonMaskableInt_IRQn 0 */
-  /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
-   while (1)
-  {
-  }
-  /* USER CODE END NonMaskableInt_IRQn 1 */
-}
-
 /**
   * @brief This function handles Hard fault interrupt.
   */
@@ -163,6 +149,20 @@ void DebugMon_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles TIM1 update interrupt and TIM16 global interrupt.
+  */
+void TIM1_UP_TIM16_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM1_UP_TIM16_IRQn 0 */
+
+  /* USER CODE END TIM1_UP_TIM16_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim16);
+  /* USER CODE BEGIN TIM1_UP_TIM16_IRQn 1 */
+
+  /* USER CODE END TIM1_UP_TIM16_IRQn 1 */
+}
+
+/**
   * @brief This function handles USART1 global interrupt.
   */
 void USART1_IRQHandler(void)
@@ -191,18 +191,5 @@ void RNG_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-void _SysTick_Handler(void)
-{
-	/* Function should be renamed to _SysTick_Handler to leave the FreeRTOS implementation untouched. */
-  /* Clear overflow flag */
-  SysTick->CTRL;
 
-  if( xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED )
-  {
-    /* Call the cortex-m33 port systick handler */
-    SysTick_Handler();
-  }
-
-  HAL_IncTick();
-}
 /* USER CODE END 1 */

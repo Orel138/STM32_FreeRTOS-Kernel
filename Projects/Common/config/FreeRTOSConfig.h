@@ -27,8 +27,9 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
+#if !defined(__IASMARM__)
 #include "logging.h"
-//#include "test_execution_config.h"
+#endif
 
 /*-----------------------------------------------------------
 * Application specific definitions.
@@ -70,7 +71,7 @@ extern uint32_t SystemCoreClock;
 #define configTICK_RATE_HZ                         ( ( TickType_t ) 1000 )
 #define configMAX_PRIORITIES                       ( 56 )
 #define configMINIMAL_STACK_SIZE                   ( ( uint16_t ) 128 )
-#define configTOTAL_HEAP_SIZE                      ( ( size_t ) 30 * 1024 )
+#define configTOTAL_HEAP_SIZE                      ( ( size_t ) 50 * 1024 )
 #define configMAX_TASK_NAME_LEN                    ( 32 )
 #define configUSE_TRACE_FACILITY                   1
 #define configUSE_16_BIT_TICKS                     0
@@ -188,22 +189,27 @@ extern uint32_t SystemCoreClock;
         }                                               \
     } while( 0 )
 
+#if !defined(__IASMARM__)
+#include "stack_macros.h"
+#endif
+
+#define configAPPLICATION_PROVIDES_cOutputBuffer    1
+#define configCOMMAND_INT_MAX_OUTPUT_SIZE           128
+
+#if !defined(__IASMARM__)
+#include "main.h"
+#endif
+
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()
+
+#if defined(STM32WB5Mxx) || defined(STM32WB55xx)
+#define portGET_RUN_TIME_COUNTER_VALUE()    ( HAL_GetTick() )
+#endif /* STM32WB5Mxx | STM32WB55xx */
+
 /* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
 standard names. */
 #define vPortSVCHandler    SVC_Handler
 #define xPortPendSVHandler PendSV_Handler
 #define xPortSysTickHandler SysTick_Handler
-
-#include "stack_macros.h"
-
-#define configAPPLICATION_PROVIDES_cOutputBuffer    1
-#define configCOMMAND_INT_MAX_OUTPUT_SIZE           128
-
-#include "main.h"
-#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()
-
-#if defined(STM32WB5Mxx) || defined(STM32WB55xx)
-#define portGET_RUN_TIME_COUNTER_VALUE()    ( __HAL_TIM_GetCounter( &htim16 ) )
-#endif /* STM32WB5Mxx | STM32WB55xx */
 
 #endif /* FREERTOS_CONFIG_H */
